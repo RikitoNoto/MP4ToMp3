@@ -19,13 +19,14 @@ def mp4_to_mp3(src_file: str, dest_directory: str):
     command.append(dest_file_name)
 
     subprocess.run(command)
+    print("Convert {} to {}", src_file, dest_file_name)
 
 
 def create_directory_tree(src_directory_path:str, dest_directory_path:str, file_function=None):
     for name in os.listdir(src_directory_path):
         if(os.path.isfile(os.path.join(src_directory_path, name))):
             if(file_function is not None):
-                file_function(src_directory_path, name, dest_directory_path)
+                file_function(os.path.join(src_directory_path, name), dest_directory_path)
             else:
                 shutil.copyfile(os.path.join(src_directory_path, name), os.path.join(dest_directory_path, name))
 
@@ -42,3 +43,5 @@ if __name__ == '__main__':
 
     src_path = args[1]
     dest_path = args[2]
+
+    create_directory_tree(src_path, dest_path)
